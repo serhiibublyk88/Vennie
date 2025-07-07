@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply before:bg-white text-black dark:bg-[#1f1f1f] dark:text-white min-h-screen flex items-center justify-center;
+}
