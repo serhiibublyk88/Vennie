@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 export const CrimePage = () => {
   const statsMutation = useCrimeStats();
 
-  // Показываем toast, если успешно, но нет данных
   useEffect(() => {
     if (statsMutation.isSuccess && Object.keys(statsMutation.data.crimes).length === 0) {
       toast.info('No data available for the selected period and location.');

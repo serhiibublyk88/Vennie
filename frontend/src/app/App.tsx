@@ -1,7 +1,3 @@
-import { CrimePage } from '@/pages/CrimePage/ui';
+import { CrimePage } from '@/pages/CrimePage/CrimePage';
 
-export const App = () => (
-  <main className="flex flex-col gap-6 items-center p-6 w-full">
-    <CrimePage />
-  </main>
-);
+export const App = () => <CrimePage />;
