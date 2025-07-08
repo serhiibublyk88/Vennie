@@ -22,9 +22,18 @@ class PoliceStatsService:
 
         try:
             response = requests.get(url, params=params, timeout=10)
+
+            
+            if response.status_code == 404:
+                return {}
+
             response.raise_for_status()
             crimes = response.json()
+
             
+            if not crimes:
+                return {}
+
             categories = [crime.get("category") for crime in crimes if "category" in crime]
             return dict(Counter(categories))
 

@@ -1,9 +1,18 @@
 import { CrimeChart } from '@/features/crime-chart/ui/CrimeChart';
 import { useCrimeStats } from '@/features/crime-search/model/useCrimeStats';
 import { AddressForm } from '@/features/crime-search/ui/AddressForm';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 export const CrimePage = () => {
   const statsMutation = useCrimeStats();
+
+  // Показываем toast, если успешно, но нет данных
+  useEffect(() => {
+    if (statsMutation.isSuccess && Object.keys(statsMutation.data.crimes).length === 0) {
+      toast.info('No data available for the selected period and location.');
+    }
+  }, [statsMutation.isSuccess, statsMutation.data]);
 
   return (
     <section className="flex flex-col items-center gap-6">
@@ -19,7 +28,9 @@ export const CrimePage = () => {
         </div>
       )}
 
-      {statsMutation.isSuccess && <CrimeChart data={statsMutation.data.crimes} />}
+      {statsMutation.isSuccess && Object.keys(statsMutation.data.crimes).length > 0 && (
+        <CrimeChart data={statsMutation.data.crimes} />
+      )}
 
       {statsMutation.isError && (
         <p className="text-red-400">An error occurred: {statsMutation.error.message}</p>
