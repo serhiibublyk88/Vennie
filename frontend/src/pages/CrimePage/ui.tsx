@@ -1,3 +1,4 @@
+import { CrimeChart } from '@/features/crime-chart/ui/CrimeChart';
 import { useCrimeStats } from '@/features/crime-search/model/useCrimeStats';
 import { AddressForm } from '@/features/crime-search/ui/AddressForm';
 
@@ -12,12 +13,16 @@ export const CrimePage = () => {
 
       <AddressForm onSubmit={statsMutation.mutate} />
 
-      {statsMutation.isPending && <p>Loading…</p>}
+      {statsMutation.isPending && (
+        <div className="flex justify-center items-center h-24">
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-400" />
+        </div>
+      )}
 
-      {statsMutation.isSuccess && (
-        <pre className="bg-gray-800 p-4 rounded text-sm mt-4">
-          {JSON.stringify(statsMutation.data, null, 2)}
-        </pre>
+      {statsMutation.isSuccess && <CrimeChart data={statsMutation.data.crimes} />}
+
+      {statsMutation.isError && (
+        <p className="text-red-400">An error occurred: {statsMutation.error.message}</p>
       )}
     </section>
   );
