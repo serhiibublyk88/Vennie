@@ -35,7 +35,7 @@ export const useCrimeForm = () => {
         .then((r) => r.json())
         .then((data) => setSuggestions(data.map((d: any) => d.display_name as string)))
         .catch(() => {});
-    }, 300);
+    }, 2000);
 
     return () => {
       clearTimeout(timer);
